@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="page"
+            type="com.nuckyboe.kotlin_jetpack_exoplayer.NavFragment2" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/page_name"
-        android:text="@string/page1"
+        android:text="@string/page2"
         android:textSize="@dimen/sp30"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -25,8 +35,10 @@
         android:background="@color/design_default_color_primary_dark"
         android:padding="10dp"
         android:textSize="@dimen/sp30"
+        android:onClick="@{()->page.onClickToNextPage()}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/page_name" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

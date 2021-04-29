@@ -7,18 +7,22 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.nuckyboe.kotlin_jetpack_exoplayer.databinding.FragmentNav3Binding
 
 class NavFragment3 : Fragment() {
+    private lateinit var binding: FragmentNav3Binding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val inflate = inflater.inflate(R.layout.fragment_nav3, container,false)
-        inflate.findViewById<TextView>(R.id.jump_to_next).setOnClickListener {
-            Navigation.findNavController(inflate).navigate(R.id.action_navFragment3_to_navFragment1)
-        }
-        return inflate
+        binding = FragmentNav3Binding.inflate(layoutInflater)
+        binding.page = this
+        return binding.root
+    }
+
+    fun onClickToNextPage(){
+        Navigation.findNavController(binding.root).navigate(R.id.action_navFragment3_to_navFragment1)
     }
 }
