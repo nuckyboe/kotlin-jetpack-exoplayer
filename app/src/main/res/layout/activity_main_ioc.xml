@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/tv_ioc_name"
         android:text="我是个按钮"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
