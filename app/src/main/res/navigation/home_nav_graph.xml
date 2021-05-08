@@ -41,7 +41,7 @@
     </fragment>
 
     <activity
-        android:name="com.nuckyboe.kotlin_jetpack_exoplayer.IOC.IOCMainAtcitivy"
+        android:name="com.nuckyboe.kotlin_jetpack_exoplayer.IOC.IOCMainActivity"
         android:id="@+id/ioc_activity"
         android:label="IocActivity"
         />
