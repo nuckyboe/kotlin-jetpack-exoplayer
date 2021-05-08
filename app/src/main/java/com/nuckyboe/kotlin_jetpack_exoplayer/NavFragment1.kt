@@ -25,4 +25,8 @@ class NavFragment1 : Fragment() {
     fun onClickToNextPage(){
         Navigation.findNavController(binding.root).navigate(R.id.action_navFragment1_to_navFragment2)
     }
+
+    fun onClickToNextActivity(){
+        Navigation.findNavController(binding.root).navigate(R.id.action_navFragment1_to_ioc_activity)
+    }
 }

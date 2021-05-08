@@ -13,6 +13,11 @@
             app:destination="@id/navFragment2"
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit" />
+        <action
+            android:id="@+id/action_navFragment1_to_ioc_activity"
+            app:destination="@id/ioc_activity"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
     </fragment>
     <fragment
         android:id="@+id/navFragment2"
@@ -34,4 +39,10 @@
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
+
+    <activity
+        android:name="com.nuckyboe.kotlin_jetpack_exoplayer.IOC.IOCMainAtcitivy"
+        android:id="@+id/ioc_activity"
+        android:label="IocActivity"
+        />
 </navigation>
