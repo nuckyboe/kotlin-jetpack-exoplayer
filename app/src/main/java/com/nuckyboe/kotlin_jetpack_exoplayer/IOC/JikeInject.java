@@ -4,13 +4,15 @@ import android.content.Context;
 import android.view.View;
 
 import com.nuckyboe.kotlin_jetpack_exoplayer.IOC.annotation.ContentView;
-import com.nuckyboe.kotlin_jetpack_exoplayer.IOC.annotation.ViewClick;
+import com.nuckyboe.kotlin_jetpack_exoplayer.IOC.annotation.EventBase;
 import com.nuckyboe.kotlin_jetpack_exoplayer.IOC.annotation.ViewInject;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.HashMap;
 
 public class JikeInject {
     public static void bind(Context context) {
@@ -23,19 +25,32 @@ public class JikeInject {
         Class<? extends Context> aClass = context.getClass();
         try {
             Method findViewById = aClass.getMethod("findViewById", int.class);
+            //获取activity里所有方法
             Method[] declaredMethods = aClass.getDeclaredMethods();
+            //遍历activity里所有方法
             for (Method declaredMethod : declaredMethods) {
-                ViewClick viewClick = declaredMethod.getAnnotation(ViewClick.class);
-                if (viewClick == null) {
-                    return;
-                }
-                int[] ids = viewClick.value();
-                for (int id : ids) {
-                    View view = (View) findViewById.invoke(context, id);
-                    Method setOnClickListener = view.getClass().getMethod("setOnClickListener", View.OnClickListener.class);
-                    OnClickInvocationHandler onClickInvocationHandler = new OnClickInvocationHandler(context, declaredMethod);
-                    Object o = Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[]{View.OnClickListener.class}, onClickInvocationHandler);
-                    setOnClickListener.invoke(view, o);
+                //获取方法上所有注解
+                Annotation[] annotations = declaredMethod.getAnnotations();
+                HashMap<String, Method> callbacks = new HashMap<>();
+                //遍历方法上所有注解
+                for (Annotation annotation : annotations) {
+                    //获取注解的注解
+                    EventBase eventBase = annotation.annotationType().getAnnotation(EventBase.class);
+                    if (eventBase == null) {
+                        return;
+                    }
+                    callbacks.put(eventBase.callback(),declaredMethod);
+                    Method value = annotation.annotationType().getMethod("value");
+                    int[] ids = (int[]) value.invoke(annotation);
+
+                    for (int id : ids) {
+                        View view = (View) findViewById.invoke(context, id);
+                        //使用时间三要素：事件、监听、回调
+                        Method listener = view.getClass().getMethod(eventBase.listener(), eventBase.listenerType());
+                        ListenerInvocationHandler onClickInvocationHandler = new ListenerInvocationHandler(context, callbacks);
+                        Object o = Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[]{eventBase.listenerType()}, onClickInvocationHandler);
+                        listener.invoke(view, o);
+                    }
                 }
             }
         } catch (NoSuchMethodException e) {

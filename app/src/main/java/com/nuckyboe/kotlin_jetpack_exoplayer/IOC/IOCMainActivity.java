@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.nuckyboe.kotlin_jetpack_exoplayer.IOC.annotation.ContentView;
 import com.nuckyboe.kotlin_jetpack_exoplayer.IOC.annotation.ViewClick;
 import com.nuckyboe.kotlin_jetpack_exoplayer.IOC.annotation.ViewInject;
+import com.nuckyboe.kotlin_jetpack_exoplayer.IOC.annotation.ViewLongClick;
 import com.nuckyboe.kotlin_jetpack_exoplayer.R;
 
 @ContentView(R.layout.activity_main_ioc)
@@ -31,5 +32,12 @@ public class IOCMainActivity extends AppCompatActivity {
     public void click(View view){
         iocName.setText("我被掉包了");
         Toast.makeText(this, "我被掉包了",Toast.LENGTH_LONG).show();
+    }
+
+    @ViewLongClick({R.id.tv_ioc_name})
+    public boolean longClick(View view){
+        iocName.setText("longClick");
+        Toast.makeText(this, "longClick",Toast.LENGTH_LONG).show();
+        return true;
     }
 }
