@@ -1,5 +1,6 @@
 package com.nuckyboe.kotlin_jetpack_exoplayer
 
+import android.os.FileUtils
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -13,5 +14,10 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
+    }
+
+    @Test
+    fun testPrint() {
+        com.nuckyboe.kotlin_jetpack_exoplayer.FileUtils.print("i am coming")
     }
 }
